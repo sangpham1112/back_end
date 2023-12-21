@@ -18,11 +18,11 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const productModel_1 = require("../model/productModel");
 exports.productRouter = express_1.default.Router();
 // /api/prodcuts
-exports.productRouter.get('/', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.productRouter.get("/", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { category, priceMin, priceMax, rating } = req.query;
     const filters = {};
-    if (category && typeof category === 'string') {
-        const arrayCate = category.split('-');
+    if (category && typeof category === "string") {
+        const arrayCate = category.split("-");
         filters.category = { $in: arrayCate };
     }
     if (priceMax && priceMin) {
@@ -34,33 +34,35 @@ exports.productRouter.get('/', (0, express_async_handler_1.default)((req, res) =
     const products = yield productModel_1.ProductModel.find(filters).lean();
     res.json(products.reverse());
 })));
-exports.productRouter.get('/categories', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const categories = yield productModel_1.ProductModel.find().distinct('category').lean();
+exports.productRouter.get("/categories", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield productModel_1.ProductModel.find().distinct("category").lean();
     res.json(categories);
 })));
 // /api/slug/tshirt
-exports.productRouter.get('/slug/:slug', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield productModel_1.ProductModel.findOne({ slug: req.params.slug }).lean();
+exports.productRouter.get("/slug/:slug", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = yield productModel_1.ProductModel.findOne({
+        slug: req.params.slug,
+    }).lean();
     if (product) {
         res.json(product);
     }
     else {
-        res.status(404).json({ message: 'Product Not Found' });
+        res.status(404).json({ message: "Product Not Found" });
     }
 })));
-exports.productRouter.get('/search', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.productRouter.get("/search", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, brand, category } = req.query;
     const filter = {
         $or: [
-            { name: { $regex: `.*${name}.*`, $options: 'i' } },
-            { brand: { $regex: `.*${brand}.*`, $options: 'i' } },
-            { category: { $regex: `.*${category}.*`, $options: 'i' } },
+            { name: { $regex: `.*${name}.*`, $options: "i" } },
+            { brand: { $regex: `.*${brand}.*`, $options: "i" } },
+            { category: { $regex: `.*${category}.*`, $options: "i" } },
         ],
     };
     const products = yield productModel_1.ProductModel.find(filter).lean();
     res.json(products);
 })));
-exports.productRouter.post('/', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.productRouter.post("/", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = yield productModel_1.ProductModel.create({
         name: req.body.name,
         category: req.body.category,
@@ -75,7 +77,7 @@ exports.productRouter.post('/', (0, express_async_handler_1.default)((req, res) 
     });
     res.json(product);
 })));
-exports.productRouter.put('/:slug', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.productRouter.put("/:slug", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = yield productModel_1.ProductModel.findOne({ slug: req.params.slug });
     if (product) {
         product.name = req.body.name || product.name;
@@ -92,7 +94,7 @@ exports.productRouter.put('/:slug', (0, express_async_handler_1.default)((req, r
         res.json(updatedProduct);
     }
 })));
-exports.productRouter.delete('/delete/:id', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.productRouter.delete("/delete/:id", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield productModel_1.ProductModel.findByIdAndDelete(req.params.id);
-    res.send('deleted product');
+    res.send("deleted product");
 })));

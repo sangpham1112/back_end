@@ -1,7 +1,6 @@
 import cors from "cors";
-import express, { Request, Response } from "express";
+import express from "express";
 import connectDB from "./connDB/connectDB";
-import path from "path";
 import { userRouter } from "./routes/userRoute";
 import { orderRouter } from "./routes/orderRoute";
 import { productRouter } from "./routes/productRoute";
