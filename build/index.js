@@ -14,7 +14,7 @@ const commentRoute_1 = require("./routes/commentRoute");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     credentials: true,
-    origin: ["http://localhost:5173"],
+    origin: ["https://sangstore.netlify.app"],
 }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

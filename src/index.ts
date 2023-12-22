@@ -11,7 +11,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ["sangstore.netlify.app"],
+    origin: ["https://sangstore.netlify.app"],
   })
 );
 

@@ -19,16 +19,16 @@ const utils_1 = require("../utils");
 const commentModel_1 = require("../model/commentModel");
 const productModel_1 = require("../model/productModel");
 exports.commentRouter = express_1.default.Router();
-exports.commentRouter.get('/:slug', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.commentRouter.get("/:slug", (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const comments = yield commentModel_1.CommentModel.find({ slug: req.params.slug });
     if (comments) {
         res.json(comments.reverse());
     }
     else {
-        res.status(404).json({ message: 'Comments Not Found' });
+        res.status(404).json({ message: "Comments Not Found" });
     }
 })));
-exports.commentRouter.post('/', utils_1.isAuth, (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.commentRouter.post("/", utils_1.isAuth, (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const comment = new commentModel_1.CommentModel({
         username: req.body.username,
         slug: req.body.slug,
@@ -46,5 +46,5 @@ exports.commentRouter.post('/', utils_1.isAuth, (0, express_async_handler_1.defa
         product.rating = avgRating;
         yield product.save();
     }
-    res.status(201).json({ message: 'Comment Created', product });
+    res.status(201).json({ message: "Comment Created", product });
 })));
